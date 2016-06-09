@@ -4,7 +4,7 @@ import java.time.ZonedDateTime
 
 fun main(args: Array<String>) {
     do {
-        println("Menu:\n1)refresh access token\n2)list calendars\n3)get events for next two months")
+        println("Menu:\n1)refresh access token\n2)list calendars\n3)get events for next year")
         val input = readLine()!!.trim().toInt()
         when(input) {
             1 -> println(HomeMade.genAccessToken())
