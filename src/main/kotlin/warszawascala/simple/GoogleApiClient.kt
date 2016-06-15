@@ -11,7 +11,7 @@ import java.time.ZonedDateTime
  * - the google api quickstart https://developers.google.com/google-apps/calendar/quickstart/java
  */
 class GoogleApiClient(val clientId: String, val clientSecret: String, val refreshToken: String) {
-    internal var accessToken: String? = null
+    internal var accessToken: String = "placeholder"
     internal var accessTokenExpires = ZonedDateTime.now().minusDays(1)
 
     internal val mapper = jacksonObjectMapper()
@@ -38,7 +38,7 @@ class GoogleApiClient(val clientId: String, val clientSecret: String, val refres
             accessTokenExpires = ZonedDateTime.now().plusSeconds(tokenInfo.expires_in)
             accessToken = tokenInfo.token_type + " " + tokenInfo.access_token
         }
-        return accessToken!!
+        return accessToken
     }
 
     private fun buildPostBody(payload: Map<String, String>, format: BodyFormat): RequestBody {

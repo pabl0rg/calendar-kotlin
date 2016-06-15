@@ -39,12 +39,12 @@ val p = project {
         jar {
             fatJar = true
             manifest {
-                attributes("Main-Class", "com.example.MainKt")
+                attributes("Main-Class", "warszawascala.MainKt")
             }
         }
     }
 
     application {
-        mainClass = "com.example.MainKt"
+        mainClass = "warszawascala.MainKt"
     }
 }
