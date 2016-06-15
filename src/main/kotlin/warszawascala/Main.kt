@@ -6,7 +6,7 @@ import java.time.ZonedDateTime
 fun main(args: Array<String>) {
 
     val googleApiClient = GoogleApiClient("CLIENT_ID", "CLIENT_SECRET", "REFRESH_TOKEN")
-    val calendarApiClient = GoogleCalendarApi(googleApiClient)
+    val calendarApiClient = GoogleCalendar(googleApiClient)
     do {
         println("Menu:\n1)refresh access token\n2)list calendars\n3)get events for next year")
         val input = readLine()!!.trim().toInt()

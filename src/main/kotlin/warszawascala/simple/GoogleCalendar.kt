@@ -5,16 +5,16 @@ import warszawascala.*
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 
-class GoogleCalendarApi(val apiClient: GoogleApiClient) {
+class GoogleCalendar(val apiClient: GoogleApiClient) {
     /**
-     * Returns a list of calendar id's
+     * Returns a list of calendar id's. Use the apiClient's mapper b/c the apiClient knows how jackson should be configured
      * TODO: return a Future
      */
     fun getCalendars(): List<String> {
         println("getting calendar list")
         val response = apiClient.call("/calendar/v3/users/me/calendarList")
         val json = response.body().string()
-        val calendarList: CalendarList = apiClient.JACKSON.readValue(json)
+        val calendarList: CalendarList = apiClient.mapper.readValue(json)
         return calendarList.items.map { it.id }
     }
 
@@ -31,7 +31,7 @@ class GoogleCalendarApi(val apiClient: GoogleApiClient) {
 
         val response = apiClient.call("/calendar/v3/calendars/$calendarId/events?timeMin=$from&timeMax=$to")
         val json = response.body().string()
-        val events: EventList = apiClient.JACKSON.readValue(json)
+        val events: EventList = apiClient.mapper.readValue(json)
         return events.items
     }
 

@@ -14,9 +14,14 @@ class GoogleApiClient(val clientId: String, val clientSecret: String, val refres
     internal var accessToken: String? = null
     internal var accessTokenExpires = ZonedDateTime.now().minusDays(1)
 
+    internal val mapper = jacksonObjectMapper()
     private val httpClient = OkHttpClient()
 
     internal enum class BodyFormat { JSON, FORM }
+
+    init {
+        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+    }
 
     /**
      * Generates a new accessToken if the old one is expired
@@ -29,7 +34,7 @@ class GoogleApiClient(val clientId: String, val clientSecret: String, val refres
                     "client_id" to clientId)
             val response = call("/oauth2/v4/token", parameters, BodyFormat.FORM, false)
             val json = response.body().string()
-            val tokenInfo: TokenInfo = JACKSON.readValue(json)
+            val tokenInfo: TokenInfo = mapper.readValue(json)
             accessTokenExpires = ZonedDateTime.now().plusSeconds(tokenInfo.expires_in)
             accessToken = tokenInfo.token_type + " " + tokenInfo.access_token
         }
@@ -42,7 +47,7 @@ class GoogleApiClient(val clientId: String, val clientSecret: String, val refres
             payload.forEach { builder.add(it.key, it.value) }
             return builder.build()
         }
-        return RequestBody.create(Companion.JSON, JACKSON.writeValueAsString(payload))
+        return RequestBody.create(Companion.JSON, mapper.writeValueAsString(payload))
     }
 
     /**
@@ -62,10 +67,6 @@ class GoogleApiClient(val clientId: String, val clientSecret: String, val refres
     }
 
     companion object {
-        internal val JACKSON = jacksonObjectMapper()
         private val JSON = MediaType.parse("application/json; charset=utf-8")
-        init {
-            JACKSON.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
-        }
     }
 }
