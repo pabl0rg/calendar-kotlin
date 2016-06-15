@@ -1,4 +1,4 @@
-package com.example
+package warszawa - scala
 
 import org.testng.annotations.Test
 
