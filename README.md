@@ -1,9 +1,8 @@
 ### About the project
 
-This is an attempt to demonstrate how the Warszawa Scala users group could implement a google calendar api
-client in Kotlin
+This is an attempt to demonstrate one could use the google calendar api client in Kotlin.  It was written with the Warszawa Sacala Users Group
 
-It leaves out the most complicated part, which is getting the OAuth2 refresh token.  It was decided that another
+We leave out the most complicated part, which is getting the OAuth2 refresh token.  It was decided that another
 part of the system would do this.  See #4 below.
 
 ### How to edit/run this project in intellij
